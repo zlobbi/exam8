@@ -50,7 +50,15 @@ window.addEventListener('load', function () {
             window.alert('Input valid country');
             return false;
         } else {
-            getCountry(country).then(res => res.json()).then(da => addCardToPage(createCardElement(da[0])));
+            getCountry(country).then(res => {
+                if(res.ok) {
+                    res.json().then(data => addCardToPage(createCardElement(data[0])));
+                    return true;
+                } else {
+                    window.alert(country + ' not found');
+                    return false;
+                }
+            });
         }
     }
 })
